@@ -13,31 +13,23 @@ from sklearn.metrics import (
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+st.set_page_config(
+    page_title=("Heart Disease Prediction"),
+    layout="wide"
+)
+
 st.title("Heart Disease Prediction")
-
-st.write("This application evaluates multiple machine learning models for Heart Disease prediction.")
-st.write("Users can select a trained model and upload a dataset to view performance metrics and confusion matrix.")
-
-# Load trained models
-models = {
-    "Logistic Regression": joblib.load("model/logistic.pkl"),
-    "Decision Tree": joblib.load("model/decision_tree.pkl"),
-    "KNN": joblib.load("model/knn.pkl"),
-    "Naive Bayes": joblib.load("model/naive_bayes.pkl"),
-    "Random Forest": joblib.load("model/random_forest.pkl"),
-    "XGBoost": joblib.load("model/xgboost.pkl")
-}
-
-# Model selection
-model_name = st.selectbox("Select a Machine Learning Model", list(models.keys()))
-model = models[model_name]
+st.write(
+    """
+    This application evaluates multiple machine learning models for Heart Disease prediction.
+    Users can select a trained model and upload a dataset to view performance metrics and confusion matrix.
+    """
+)
 
 st.markdown("### Dataset Selection")
 st.write("You may upload your own CSV dataset containing a 'target' column. If no file is uploaded, the application will automatically use the default heart.csv sample dataset.")
 
 # Upload dataset
-uploaded_file = st.file_uploader("Upload CSV test dataset", type=["csv"])
-
 uploaded_file = st.file_uploader("Upload CSV test dataset (optional)", type=["csv"])
 
 if uploaded_file is not None:
@@ -74,3 +66,17 @@ else:
 
     else:
         st.error("Uploaded CSV must contain a 'target' column.")
+
+# Load trained models
+models = {
+    "Logistic Regression": joblib.load("model/logistic.pkl"),
+    "Decision Tree": joblib.load("model/decision_tree.pkl"),
+    "KNN": joblib.load("model/knn.pkl"),
+    "Naive Bayes": joblib.load("model/naive_bayes.pkl"),
+    "Random Forest": joblib.load("model/random_forest.pkl"),
+    "XGBoost": joblib.load("model/xgboost.pkl")
+}
+
+# Model selection
+model_name = st.selectbox("Select a Machine Learning Model", list(models.keys()))
+model = models[model_name]
