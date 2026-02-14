@@ -13,7 +13,10 @@ from sklearn.metrics import (
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-st.title("Heart Disease Prediction – ML Assignment 2")
+st.title("Heart Disease Prediction")
+
+st.write("This application evaluates multiple machine learning models for Heart Disease prediction.")
+st.write("Users can select a trained model and upload a dataset to view performance metrics and confusion matrix.")
 
 # Load trained models
 models = {
@@ -29,11 +32,20 @@ models = {
 model_name = st.selectbox("Select a Machine Learning Model", list(models.keys()))
 model = models[model_name]
 
+st.markdown("### Dataset Selection")
+st.write("You may upload your own CSV dataset containing a 'target' column. If no file is uploaded, the application will automatically use the default heart.csv sample dataset.")
+
 # Upload dataset
 uploaded_file = st.file_uploader("Upload CSV test dataset", type=["csv"])
 
+uploaded_file = st.file_uploader("Upload CSV test dataset (optional)", type=["csv"])
+
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
+    st.success("Custom dataset uploaded successfully. Evaluating model on uploaded data.")
+else:
+    st.warning("No dataset uploaded. Using default sample dataset (heart.csv) from the repository for evaluation.")
+    data = pd.read_csv("heart.csv")
 
     if "target" in data.columns:
         X_test = data.drop("target", axis=1)
