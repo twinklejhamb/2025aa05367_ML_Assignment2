@@ -46,6 +46,25 @@ if "target" not in data.columns:
 
 st.markdown("### Model Selection")
 
+model_options = [
+    "Select a model",
+    "Logistic Regression",
+    "Decision Tree",
+    "KNN",
+    "Naive Bayes",
+    "Random Forest",
+    "XGBoost"
+]
+
+model_name = st.selectbox(
+    "Select a Machine Learning Model",
+    model_options
+)
+
+if model_name == "Select a model":
+    st.warning("Please select a model to proceed with evaluation.")
+    st.stop()
+    
 models = {
     "Logistic Regression": joblib.load("model/logistic.pkl"),
     "Decision Tree": joblib.load("model/decision_tree.pkl"),
