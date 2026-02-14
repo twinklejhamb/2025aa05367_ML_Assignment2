@@ -74,11 +74,6 @@ models = {
     "XGBoost": joblib.load("model/xgboost.pkl")
 }
 
-model_name = st.selectbox(
-    "Select a Machine Learning Model",
-    list(models.keys())
-)
-
 model = models[model_name]
 
 X_test = data.drop("target", axis=1)
